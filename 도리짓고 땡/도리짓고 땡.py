@@ -6,57 +6,88 @@ from Player import*
 import random
 
 class Dori:
+    def checkWinner(self):
+        # 뒤집힌 카드를 다시 그린다.
+        p = PhotoImage(file="BlackJack Resource/cards/" + self.dealer.cards[0].filename())
+        self.LcardDealer[0].configure(image=p)  # 이미지 레퍼런스 변경
+        self.LcardDealer[0].image = p  # 파이썬은 라벨 이미지 레퍼런스를 갖고 있어야 이미지가 보임
+        self.LdealerPts.configure(text=str(self.dealer.value()))
+        if self.player.value() > 21:
+            self.Lstatus.configure(text="Player Busts")
+            PlaySound('BlackJack Resource/sounds/wrong.wav', SND_FILENAME)
+        elif self.dealer.value() > 21:
+            self.Lstatus.configure(text="Dealer Busts")
+            self.playerMoney += self.betMoney * 2
+            PlaySound('BlackJack Resource/sounds/win.wav', SND_FILENAME)
+        elif self.dealer.value() == self.player.value():
+            self.Lstatus.configure(text="Push")
+            self.playerMoney += self.betMoney
+        elif self.dealer.value() < self.player.value():
+            self.Lstatus.configure(text="You won!!")
+            self.playerMoney += self.betMoney * 2
+            PlaySound('BlackJack Resource/sounds/win.wav', SND_FILENAME)
+        else:
+             self.Lstatus.configure(text="Sorry you lost!")
+             PlaySound('BlackJack Resource/sounds/wrong.wav', SND_FILENAME)
+        self.B50['state'] = 'disabled'
+        self.B50['bg']='gray'
+        self.B10['state']='disabled'
+        self.B10['bg']='gray'
+        self.B1['state'] ='disabled'
+        self.B1['bg']='gray'
+
+        self.Hit['state']  = 'disabled'
+        self.Hit['bg']= 'gray'
+        self.Stay['state']='disabled'
+        self.Stay['bg']='gray'
+        self.Deal['state']='disabled'
+        self.Deal['bg']='gray'
+        self.Again['state'] = 'active'
+        self.Again['bg'] = 'white'
+
     def hitPlayer1(self,n):
         newCard = Card(self.cardDeck[self.deckN])
         self.deckN += 1
         self.player1.addCard(newCard)
-        p = PhotoImage(file='cards/'+newCard.filename())
-        self.LcardsPlayer.append(Label(self.window, image=p))
-        self.LcardsPlayer[self.player.inHand()-1].image = p
-        self.LcardsPlayer[self.player.inHand()-1].place(x=250+n*30, y=350)
-        self.LplayerPts.configure(text=str(self.player.value()))
-        PlaySound('sounds/cardFilp1.wav',SND_FILENAME)
+        p = PhotoImage(file='GodoriCards/'+newCard.filename())
+        self.LcardsPlayer1.append(Label(self.window, image=p))
+        self.LcardsPlayer1[self.player1.inHand()-1].image = p
+        self.LcardsPlayer1[self.player1.inHand()-1].place(x=150+n*30, y=650)
+        self.Lplayer1Pts.configure(text=str(self.player1.value()))
+        #PlaySound('sounds/cardFilp1.wav',SND_FILENAME)
+
     def hitPlayer2(self,n):
         newCard = Card(self.cardDeck[self.deckN])
         self.deckN += 1
         self.player2.addCard(newCard)
-        p = PhotoImage(file='cards/'+newCard.filename())
-        self.LcardsPlayer.append(Label(self.window, image=p))
-        self.LcardsPlayer[self.player.inHand()-1].image = p
-        self.LcardsPlayer[self.player.inHand()-1].place(x=250+n*30, y=350)
-        self.LplayerPts.configure(text=str(self.player.value()))
-        PlaySound('sounds/cardFilp1.wav',SND_FILENAME)
+        p = PhotoImage(file='GodoriCards/'+newCard.filename())
+        self.LcardsPlayer2.append(Label(self.window, image=p))
+        self.LcardsPlayer2[self.player2.inHand()-1].image = p
+        self.LcardsPlayer2[self.player2.inHand()-1].place(x=350+n*30, y=650)
+        self.Lplayer2Pts.configure(text=str(self.player2.value()))
+        #PlaySound('sounds/cardFilp1.wav',SND_FILENAME)
+
     def hitPlayer3(self,n):
         newCard = Card(self.cardDeck[self.deckN])
         self.deckN += 1
         self.player3.addCard(newCard)
-        p = PhotoImage(file='cards/'+newCard.filename())
-        self.LcardsPlayer.append(Label(self.window, image=p))
-        self.LcardsPlayer[self.player.inHand()-1].image = p
-        self.LcardsPlayer[self.player.inHand()-1].place(x=250+n*30, y=350)
-        self.LplayerPts.configure(text=str(self.player.value()))
-        PlaySound('sounds/cardFilp1.wav',SND_FILENAME)
+        p = PhotoImage(file='GodoriCards/'+newCard.filename())
+        self.LcardsPlayer3.append(Label(self.window, image=p))
+        self.LcardsPlayer3[self.player3.inHand()-1].image = p
+        self.LcardsPlayer3[self.player3.inHand()-1].place(x=550+n*30, y=650)
+        self.Lplayer3Pts.configure(text=str(self.player3.value()))
+       # PlaySound('sounds/cardFilp1.wav',SND_FILENAME)
 
-    def hitDealerDown(self):
-        newCard = Card(self.cardDeck[self.deckN])
-        self.deckN += 1
-        self.dealer.addCard(newCard)
-        p = PhotoImage(file='cards/b2fv.png')
-        self.LcardsDealer.append(Label(self.window, image=p))
-        self.LcardsDealer[self.dealer.inHand() - 1].image = p
-        self.LcardsDealer[self.dealer.inHand() - 1].place(x=250, y=150)
-        self.LdealerPts.configure(text=str(self.dealer.value()))
-        PlaySound('sounds/cardFilp1.wav', SND_FILENAME)
     def hitDealer(self,n):
         newCard = Card(self.cardDeck[self.deckN])
         self.deckN += 1
         self.dealer.addCard(newCard)
-        p = PhotoImage(file='cards/'+newCard.filename())
+        p = PhotoImage(file='GodoriCards/'+newCard.filename())
         self.LcardsDealer.append(Label(self.window, image=p))
         self.LcardsDealer[self.dealer.inHand() - 1].image = p
         self.LcardsDealer[self.dealer.inHand() - 1].place(x=250 + n * 30, y=150)
         self.LdealerPts.configure(text=str(self.dealer.value()))
-        PlaySound('sounds/cardFilp1.wav', SND_FILENAME)
+        #PlaySound('sounds/cardFilp1.wav', SND_FILENAME)
     def deal(self):
         if self.cards == 0:
             random.shuffle(self.cardDeck)
@@ -86,6 +117,9 @@ class Dori:
             self.hitDealer(4)
             self.cards = 5
         if self.cards == 5:
+            self.checkWinner()
+
+
 
 
 
@@ -102,7 +136,6 @@ class Dori:
     def pressedP3B1(self):
         pass
     def pressedDeal(self):
-        self.deal()
         self.P1B5['state'] = 'active'
         self.P1B5['bg'] = 'white'
         self.P1B1['state'] = 'active'
@@ -117,6 +150,8 @@ class Dori:
         self.P3B1['bg'] = 'white'
         self.Deal['state'] = 'disabled'
         self.Deal['bg'] = 'gray'
+        self.deal()
+
     def pressedAgain(self):
         self.player1.reset()
         self.player2.reset()
@@ -300,11 +335,11 @@ class Dori:
         self.nCardsPlayer2 = 0 #플레이어 카드 위치변수
         self.nCardsPlayer3 = 0 #플레이어 카드 위치변수
         self.nCardsDealer = 0 #딜러 카드 위치 변수
-        self.LcardPlayer1 = [] #플레이어 카드 이미지 라벨들을 갖는 리스트
-        self.LcardPlayer2 = [] #플레이어 카드 이미지 라벨들을 갖는 리스트
-        self.LcardPlayer3 = [] #플레이어 카드 이미지 라벨들을 갖는 리스트
-        self.LcardDealer = []
-        self.cardDeck =[i for i in range(40)] #[0~51]
+        self.LcardsPlayer1 = [] #플레이어 카드 이미지 라벨들을 갖는 리스트
+        self.LcardsPlayer2 = [] #플레이어 카드 이미지 라벨들을 갖는 리스트
+        self.LcardsPlayer3 = [] #플레이어 카드 이미지 라벨들을 갖는 리스트
+        self.LcardsDealer = []
+        self.cardDeck =[i for i in range(40)]
         self.deckN = 0 #카드덱에서 몇번째 숫자를 선택하느냐 나타내는 변수
         self.window.mainloop()
 

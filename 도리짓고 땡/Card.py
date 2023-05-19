@@ -8,7 +8,7 @@ class Card:
         return suits[self.x]
 
     def filename(self): #
-        return self.getsuit()+ str(self.value)+'.gif'
+        return self.getsuit()+'.'+str(self.value)+'.gif'
 
     def getValue(self):
         return self.value
