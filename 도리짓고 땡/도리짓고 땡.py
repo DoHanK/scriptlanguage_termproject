@@ -63,7 +63,7 @@ class Dori:
         p = PhotoImage(file='GodoriCards/'+newCard.filename())
         self.LcardsPlayer2.append(Label(self.window, image=p))
         self.LcardsPlayer2[self.player2.inHand()-1].image = p
-        self.LcardsPlayer2[self.player2.inHand()-1].place(x=350+n*30, y=650)
+        self.LcardsPlayer2[self.player2.inHand()-1].place(x=550+n*30, y=650)
         self.Lplayer2Pts.configure(text=str(self.player2.value()))
         #PlaySound('sounds/cardFilp1.wav',SND_FILENAME)
 
@@ -74,7 +74,7 @@ class Dori:
         p = PhotoImage(file='GodoriCards/'+newCard.filename())
         self.LcardsPlayer3.append(Label(self.window, image=p))
         self.LcardsPlayer3[self.player3.inHand()-1].image = p
-        self.LcardsPlayer3[self.player3.inHand()-1].place(x=550+n*30, y=650)
+        self.LcardsPlayer3[self.player3.inHand()-1].place(x=950+n*30, y=650)
         self.Lplayer3Pts.configure(text=str(self.player3.value()))
        # PlaySound('sounds/cardFilp1.wav',SND_FILENAME)
 
@@ -85,7 +85,7 @@ class Dori:
         p = PhotoImage(file='GodoriCards/'+newCard.filename())
         self.LcardsDealer.append(Label(self.window, image=p))
         self.LcardsDealer[self.dealer.inHand() - 1].image = p
-        self.LcardsDealer[self.dealer.inHand() - 1].place(x=250 + n * 30, y=150)
+        self.LcardsDealer[self.dealer.inHand() - 1].place(x=550 + n * 30, y=250)
         self.LdealerPts.configure(text=str(self.dealer.value()))
         #PlaySound('sounds/cardFilp1.wav', SND_FILENAME)
     def deal(self):
@@ -124,17 +124,71 @@ class Dori:
 
 
     def pressedP1B5(self):
-        pass
+        self.Deal['state'] = 'active'
+        self.Deal['bg'] = 'white'
+        self.P1betMoney += 5
+        if self.playerMoney >= 5:
+            self.LP1betMoney.configure(text= str(self.P1betMoney)+"만")
+            self.playerMoney -= 5
+            self.LeftMoney.configure(text=str(self.playerMoney)+"만")
+            #PlaySound('BlackJack Resource/sounds/chip.wav', SND_FILENAME)
+        else:
+            self.betMoney -= 5
     def pressedP1B1(self):
-        pass
+        self.Deal['state'] = 'active'
+        self.Deal['bg'] = 'white'
+        self.P1betMoney += 1
+        if self.playerMoney >= 1:
+            self.LP1betMoney.configure(text=str(self.P1betMoney) + "만")
+            self.playerMoney -= 1
+            self.LeftMoney.configure(text=str(self.playerMoney) + "만")
+            # PlaySound('BlackJack Resource/sounds/chip.wav', SND_FILENAME)
+        else:
+            self.betMoney -= 1
     def pressedP2B5(self):
-        pass
+        self.Deal['state'] = 'active'
+        self.Deal['bg'] = 'white'
+        self.P2betMoney += 5
+        if self.playerMoney >= 5:
+            self.LP2betMoney.configure(text=str(self.P2betMoney) + "만")
+            self.playerMoney -= 5
+            self.LeftMoney.configure(text=str(self.playerMoney) + "만")
+            # PlaySound('BlackJack Resource/sounds/chip.wav', SND_FILENAME)
+        else:
+            self.betMoney -= 5
     def pressedP2B1(self):
-        pass
+        self.Deal['state'] = 'active'
+        self.Deal['bg'] = 'white'
+        self.P2betMoney += 1
+        if self.playerMoney >= 1:
+            self.LP2betMoney.configure(text=str(self.P2betMoney) + "만")
+            self.playerMoney -= 1
+            self.LeftMoney.configure(text=str(self.playerMoney) + "만")
+            # PlaySound('BlackJack Resource/sounds/chip.wav', SND_FILENAME)
+        else:
+            self.betMoney -= 1
     def pressedP3B5(self):
-        pass
+        self.Deal['state'] = 'active'
+        self.Deal['bg'] = 'white'
+        self.P3betMoney += 5
+        if self.playerMoney >= 5:
+            self.LP3betMoney.configure(text=str(self.P3betMoney) + "만")
+            self.playerMoney -= 5
+            self.LeftMoney.configure(text=str(self.playerMoney) + "만")
+            # PlaySound('BlackJack Resource/sounds/chip.wav', SND_FILENAME)
+        else:
+            self.betMoney -= 5
     def pressedP3B1(self):
-        pass
+        self.Deal['state'] = 'active'
+        self.Deal['bg'] = 'white'
+        self.P3betMoney += 1
+        if self.playerMoney >= 1:
+            self.LP3betMoney.configure(text=str(self.P3betMoney) + "만")
+            self.playerMoney -= 1
+            self.LeftMoney.configure(text=str(self.playerMoney) + "만")
+            # PlaySound('BlackJack Resource/sounds/chip.wav', SND_FILENAME)
+        else:
+            self.betMoney -= 1
     def pressedDeal(self):
         self.P1B5['state'] = 'active'
         self.P1B5['bg'] = 'white'
@@ -200,17 +254,17 @@ class Dori:
         self.deckN = 0
 
     def setupButton(self):
-        self.P1B5 =Button(self.window,text='Bet 50',width=10,height=2,font =self.fontstyle2,command=self.pressedP1B5)
+        self.P1B5 =Button(self.window,text='Bet 5만',width=10,height=2,font =self.fontstyle2,command=self.pressedP1B5)
         self.P1B5.place(x=100,y=950)
-        self.P1B1 =Button(self.window,text='Bet 10',width=10,height=2,font =self.fontstyle2,command=self.pressedP1B1)
+        self.P1B1 =Button(self.window,text='Bet 1만',width=10,height=2,font =self.fontstyle2,command=self.pressedP1B1)
         self.P1B1.place(x=250,y=950)
-        self.P2B5 =Button(self.window,text='Bet 1',width=10,height=2,font =self.fontstyle2,command=self.pressedP2B5)
+        self.P2B5 =Button(self.window,text='Bet 5만',width=10,height=2,font =self.fontstyle2,command=self.pressedP2B5)
         self.P2B5.place(x=500,y=950)
-        self.P2B1 = Button(self.window, text='Bet 50', width=10, height=2, font=self.fontstyle2, command=self.pressedP2B1)
+        self.P2B1 = Button(self.window, text='Bet 1만', width=10, height=2, font=self.fontstyle2, command=self.pressedP2B1)
         self.P2B1.place(x=650, y=950)
-        self.P3B5 = Button(self.window, text='Bet 10', width=10, height=2, font=self.fontstyle2, command=self.pressedP3B5)
+        self.P3B5 = Button(self.window, text='Bet 5만', width=10, height=2, font=self.fontstyle2, command=self.pressedP3B5)
         self.P3B5.place(x=900, y=950)
-        self.P3B1 = Button(self.window, text='Bet 1', width=10, height=2, font=self.fontstyle2, command=self.pressedP3B1)
+        self.P3B1 = Button(self.window, text='Bet 1만', width=10, height=2, font=self.fontstyle2, command=self.pressedP3B1)
         self.P3B1.place(x=1050, y=950)
         self.Deal =Button(self.window,text='Deal',width=10,height=2,font =self.fontstyle2,command=self.pressedDeal)
         self.Deal.place(x=1250,y=950)
@@ -232,14 +286,14 @@ class Dori:
         self.Again['bg'] = 'gray'
 
     def setupLabel(self):
-        self.P1betMoney = Label(text='0만',width=7,height=1,font=self.fontstyle,bg='#2B652E',fg='yellow')
-        self.P1betMoney.place(x=200,y=900)
+        self.LP1betMoney = Label(text='0만',width=7,height=1,font=self.fontstyle,bg='#2B652E',fg='yellow')
+        self.LP1betMoney.place(x=200,y=900)
 
-        self.P2betMoney = Label(text='0만', width=7, height=1, font=self.fontstyle, bg='#2B652E', fg='yellow')
-        self.P2betMoney.place(x=600, y=900)
+        self.LP2betMoney = Label(text='0만', width=7, height=1, font=self.fontstyle, bg='#2B652E', fg='yellow')
+        self.LP2betMoney.place(x=600, y=900)
 
-        self.P3betMoney = Label(text='0만', width=7, height=1, font=self.fontstyle, bg='#2B652E', fg='yellow')
-        self.P3betMoney.place(x=1000, y=900)
+        self.LP3betMoney = Label(text='0만', width=7, height=1, font=self.fontstyle, bg='#2B652E', fg='yellow')
+        self.LP3betMoney.place(x=1000, y=900)
 
         self.LeftMoney = Label(text='1000만', width=7, height=1, font=self.fontstyle, bg='#205928', fg='yellow')
         self.LeftMoney.place(x=1400, y=900)
