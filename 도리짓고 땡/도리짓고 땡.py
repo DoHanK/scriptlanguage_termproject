@@ -7,52 +7,33 @@ import random
 
 class Dori:
     def checkWinner(self):
-        # 뒤집힌 카드를 다시 그린다.
-        p = PhotoImage(file="BlackJack Resource/cards/" + self.dealer.cards[0].filename())
-        self.LcardDealer[0].configure(image=p)  # 이미지 레퍼런스 변경
-        self.LcardDealer[0].image = p  # 파이썬은 라벨 이미지 레퍼런스를 갖고 있어야 이미지가 보임
-        self.LdealerPts.configure(text=str(self.dealer.value()))
-        if self.player.value() > 21:
-            self.Lstatus.configure(text="Player Busts")
-            PlaySound('BlackJack Resource/sounds/wrong.wav', SND_FILENAME)
-        elif self.dealer.value() > 21:
-            self.Lstatus.configure(text="Dealer Busts")
-            self.playerMoney += self.betMoney * 2
-            PlaySound('BlackJack Resource/sounds/win.wav', SND_FILENAME)
-        elif self.dealer.value() == self.player.value():
-            self.Lstatus.configure(text="Push")
-            self.playerMoney += self.betMoney
-        elif self.dealer.value() < self.player.value():
-            self.Lstatus.configure(text="You won!!")
-            self.playerMoney += self.betMoney * 2
-            PlaySound('BlackJack Resource/sounds/win.wav', SND_FILENAME)
-        else:
-             self.Lstatus.configure(text="Sorry you lost!")
-             PlaySound('BlackJack Resource/sounds/wrong.wav', SND_FILENAME)
-        self.B50['state'] = 'disabled'
-        self.B50['bg']='gray'
-        self.B10['state']='disabled'
-        self.B10['bg']='gray'
-        self.B1['state'] ='disabled'
-        self.B1['bg']='gray'
+        pass
+        # if self.player.value() > 21:
+        #     self.Lstatus.configure(text="Player Busts")
+        #     PlaySound('BlackJack Resource/sounds/wrong.wav', SND_FILENAME)
+        # elif self.dealer.value() > 21:
+        #     self.Lstatus.configure(text="Dealer Busts")
+        #     self.playerMoney += self.betMoney * 2
+        #     PlaySound('BlackJack Resource/sounds/win.wav', SND_FILENAME)
+        # elif self.dealer.value() == self.player.value():
+        #     self.Lstatus.configure(text="Push")
+        #     self.playerMoney += self.betMoney
+        # elif self.dealer.value() < self.player.value():
+        #     self.Lstatus.configure(text="You won!!")
+        #     self.playerMoney += self.betMoney * 2
+        #     PlaySound('BlackJack Resource/sounds/win.wav', SND_FILENAME)
+        # else:
+        #      self.Lstatus.configure(text="Sorry you lost!")
 
-        self.Hit['state']  = 'disabled'
-        self.Hit['bg']= 'gray'
-        self.Stay['state']='disabled'
-        self.Stay['bg']='gray'
-        self.Deal['state']='disabled'
-        self.Deal['bg']='gray'
-        self.Again['state'] = 'active'
-        self.Again['bg'] = 'white'
 
     def hitPlayer1(self,n):
         newCard = Card(self.cardDeck[self.deckN])
         self.deckN += 1
         self.player1.addCard(newCard)
         p = PhotoImage(file='GodoriCards/'+newCard.filename())
-        self.LcardsPlayer1.append(Label(self.window, image=p))
-        self.LcardsPlayer1[self.player1.inHand()-1].image = p
-        self.LcardsPlayer1[self.player1.inHand()-1].place(x=150+n*30, y=650)
+        self.LcardPlayer1.append(Label(self.window, image=p))
+        self.LcardPlayer1[self.player1.inHand()-1].image = p
+        self.LcardPlayer1[self.player1.inHand()-1].place(x=150+n*30, y=650)
         self.Lplayer1Pts.configure(text=str(self.player1.value()))
         #PlaySound('sounds/cardFilp1.wav',SND_FILENAME)
 
@@ -61,9 +42,9 @@ class Dori:
         self.deckN += 1
         self.player2.addCard(newCard)
         p = PhotoImage(file='GodoriCards/'+newCard.filename())
-        self.LcardsPlayer2.append(Label(self.window, image=p))
-        self.LcardsPlayer2[self.player2.inHand()-1].image = p
-        self.LcardsPlayer2[self.player2.inHand()-1].place(x=550+n*30, y=650)
+        self.LcardPlayer2.append(Label(self.window, image=p))
+        self.LcardPlayer2[self.player2.inHand()-1].image = p
+        self.LcardPlayer2[self.player2.inHand()-1].place(x=550+n*30, y=650)
         self.Lplayer2Pts.configure(text=str(self.player2.value()))
         #PlaySound('sounds/cardFilp1.wav',SND_FILENAME)
 
@@ -72,9 +53,9 @@ class Dori:
         self.deckN += 1
         self.player3.addCard(newCard)
         p = PhotoImage(file='GodoriCards/'+newCard.filename())
-        self.LcardsPlayer3.append(Label(self.window, image=p))
-        self.LcardsPlayer3[self.player3.inHand()-1].image = p
-        self.LcardsPlayer3[self.player3.inHand()-1].place(x=950+n*30, y=650)
+        self.LcardPlayer3.append(Label(self.window, image=p))
+        self.LcardPlayer3[self.player3.inHand()-1].image = p
+        self.LcardPlayer3[self.player3.inHand()-1].place(x=950+n*30, y=650)
         self.Lplayer3Pts.configure(text=str(self.player3.value()))
        # PlaySound('sounds/cardFilp1.wav',SND_FILENAME)
 
@@ -83,9 +64,9 @@ class Dori:
         self.deckN += 1
         self.dealer.addCard(newCard)
         p = PhotoImage(file='GodoriCards/'+newCard.filename())
-        self.LcardsDealer.append(Label(self.window, image=p))
-        self.LcardsDealer[self.dealer.inHand() - 1].image = p
-        self.LcardsDealer[self.dealer.inHand() - 1].place(x=550 + n * 30, y=250)
+        self.LcardDealer.append(Label(self.window, image=p))
+        self.LcardDealer[self.dealer.inHand() - 1].image = p
+        self.LcardDealer[self.dealer.inHand() - 1].place(x=550 + n * 30, y=250)
         #PlaySound('sounds/cardFilp1.wav', SND_FILENAME)
     def deal(self):
         if self.cards == 0:
@@ -129,7 +110,7 @@ class Dori:
         if self.playerMoney >= 5:
             self.LP1betMoney.configure(text= str(self.P1betMoney)+"만")
             self.playerMoney -= 5
-            self.LeftMoney.configure(text=str(self.playerMoney)+"만")
+            self.LplayerMoney.configure(text=str(self.playerMoney)+"만")
             #PlaySound('BlackJack Resource/sounds/chip.wav', SND_FILENAME)
         else:
             self.betMoney -= 5
@@ -140,7 +121,7 @@ class Dori:
         if self.playerMoney >= 1:
             self.LP1betMoney.configure(text=str(self.P1betMoney) + "만")
             self.playerMoney -= 1
-            self.LeftMoney.configure(text=str(self.playerMoney) + "만")
+            self.LplayerMoney.configure(text=str(self.playerMoney) + "만")
             # PlaySound('BlackJack Resource/sounds/chip.wav', SND_FILENAME)
         else:
             self.betMoney -= 1
@@ -151,7 +132,7 @@ class Dori:
         if self.playerMoney >= 5:
             self.LP2betMoney.configure(text=str(self.P2betMoney) + "만")
             self.playerMoney -= 5
-            self.LeftMoney.configure(text=str(self.playerMoney) + "만")
+            self.LplayerMoney.configure(text=str(self.playerMoney) + "만")
             # PlaySound('BlackJack Resource/sounds/chip.wav', SND_FILENAME)
         else:
             self.betMoney -= 5
@@ -162,7 +143,7 @@ class Dori:
         if self.playerMoney >= 1:
             self.LP2betMoney.configure(text=str(self.P2betMoney) + "만")
             self.playerMoney -= 1
-            self.LeftMoney.configure(text=str(self.playerMoney) + "만")
+            self.LplayerMoney.configure(text=str(self.playerMoney) + "만")
             # PlaySound('BlackJack Resource/sounds/chip.wav', SND_FILENAME)
         else:
             self.betMoney -= 1
@@ -173,7 +154,7 @@ class Dori:
         if self.playerMoney >= 5:
             self.LP3betMoney.configure(text=str(self.P3betMoney) + "만")
             self.playerMoney -= 5
-            self.LeftMoney.configure(text=str(self.playerMoney) + "만")
+            self.LplayerMoney.configure(text=str(self.playerMoney) + "만")
             # PlaySound('BlackJack Resource/sounds/chip.wav', SND_FILENAME)
         else:
             self.betMoney -= 5
@@ -184,32 +165,50 @@ class Dori:
         if self.playerMoney >= 1:
             self.LP3betMoney.configure(text=str(self.P3betMoney) + "만")
             self.playerMoney -= 1
-            self.LeftMoney.configure(text=str(self.playerMoney) + "만")
+            self.LplayerMoney.configure(text=str(self.playerMoney) + "만")
             # PlaySound('BlackJack Resource/sounds/chip.wav', SND_FILENAME)
         else:
             self.betMoney -= 1
     def pressedDeal(self):
-        self.P1B5['state'] = 'active'
-        self.P1B5['bg'] = 'white'
-        self.P1B1['state'] = 'active'
-        self.P1B1['bg'] = 'white'
-        self.P2B5['state'] = 'active'
-        self.P2B5['bg'] = 'white'
-        self.P2B1['state'] = 'active'
-        self.P2B1['bg'] = 'white'
-        self.P3B5['state'] = 'active'
-        self.P3B5['bg'] = 'white'
-        self.P3B1['state'] = 'active'
-        self.P3B1['bg'] = 'white'
-        self.Deal['state'] = 'disabled'
+        self.Deal['state'] = 'disable'
         self.Deal['bg'] = 'gray'
+        if self.cards == 0:
+            self.P1B5['state'] = 'active'
+            self.P1B5['bg'] = 'white'
+            self.P1B1['state'] = 'active'
+            self.P1B1['bg'] = 'white'
+            self.P2B5['state'] = 'active'
+            self.P2B5['bg'] = 'white'
+            self.P2B1['state'] = 'active'
+            self.P2B1['bg'] = 'white'
+            self.P3B5['state'] = 'active'
+            self.P3B5['bg'] = 'white'
+            self.P3B1['state'] = 'active'
+            self.P3B1['bg'] = 'white'
+            self.Deal['state'] = 'disabled'
+            self.Deal['bg'] = 'gray'
+        elif self.cards == 4:
+            self.P1B5['state'] = 'disable'
+            self.P1B5['bg'] = 'gray'
+            self.P1B1['state'] = 'disable'
+            self.P1B1['bg'] = 'gray'
+            self.P2B5['state'] = 'disable'
+            self.P2B5['bg'] = 'gray'
+            self.P2B1['state'] = 'disable'
+            self.P2B1['bg'] = 'gray'
+            self.P3B5['state'] = 'disable'
+            self.P3B5['bg'] = 'gray'
+            self.P3B1['state'] = 'disable'
+            self.P3B1['bg'] = 'gray'
+            self.Deal['state'] = 'disabled'
+            self.Deal['bg'] = 'gray'
+            self.Again['state'] = 'active'
+            self.Again['bg'] = 'white'
+
         self.deal()
 
     def pressedAgain(self):
-        self.player1.reset()
-        self.player2.reset()
-        self.player3.reset()
-        self.dealer.reset()
+        self.cards = 0
         self.P1B5['state'] = 'disabled'
         self.P1B5['bg'] = 'gray'
         self.P1B1['state'] = 'disabled'
@@ -239,17 +238,25 @@ class Dori:
         self.P2Lstatus.configure(text="")
         self.P3Lstatus.configure(text="")
 
-        self.LcardPlayer = []
+        self.LcardPlayer1 = []
+        self.LcardPlayer2 = []
+        self.LcardPlayer3 = []
         self.LcardDealer = []
-        self.nCardsPlayer = 0 #플레이어 카드 위치변수
+        self.nCardsPlayer1 = 0 #플레이어 카드 위치변수
+        self.nCardsPlayer2 = 0 #플레이어 카드 위치변수
+        self.nCardsPlayer3 = 0 #플레이어 카드 위치변수
         self.nCardsDealer = 0 #딜러 카드 위치 변수
-        self.betMoney = 0
+        self.P1betMoney = 0
+        self.P2betMoney = 0
+        self.P3betMoney = 0
+        self.LP1betMoney.configure(text = str(self.P1betMoney)+'만')
+        self.LP2betMoney.configure(text= str(self.P2betMoney)+'만')
+        self.LP3betMoney.configure(text=str(self.P3betMoney)+'만')
+        self.LplayerMoney.configure(text=str(self.playerMoney)+'만')
         self.player1.reset()
         self.player2.reset()
         self.player3.reset()
         self.dealer.reset()
-        self.LbetMoney.configure(text='$' + str(self.betMoney))
-        self.LplayerMoney.configure(text='You have $' + str(self.playerMoney))
         self.deckN = 0
 
     def setupButton(self):
@@ -294,8 +301,8 @@ class Dori:
         self.LP3betMoney = Label(text='0만', width=7, height=1, font=self.fontstyle, bg='#2B652E', fg='yellow')
         self.LP3betMoney.place(x=1000, y=900)
 
-        self.LeftMoney = Label(text='1000만', width=7, height=1, font=self.fontstyle, bg='#205928', fg='yellow')
-        self.LeftMoney.place(x=1400, y=900)
+        self.LplayerMoney = Label(text='1000만', width=7, height=1, font=self.fontstyle, bg='#205928', fg='yellow')
+        self.LplayerMoney.place(x=1400, y=900)
 
         self.P1card1 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
         self.P1card1.place(x=100, y=800)
@@ -388,10 +395,10 @@ class Dori:
         self.nCardsPlayer2 = 0 #플레이어 카드 위치변수
         self.nCardsPlayer3 = 0 #플레이어 카드 위치변수
         self.nCardsDealer = 0 #딜러 카드 위치 변수
-        self.LcardsPlayer1 = [] #플레이어 카드 이미지 라벨들을 갖는 리스트
-        self.LcardsPlayer2 = [] #플레이어 카드 이미지 라벨들을 갖는 리스트
-        self.LcardsPlayer3 = [] #플레이어 카드 이미지 라벨들을 갖는 리스트
-        self.LcardsDealer = []
+        self.LcardPlayer1 = [] #플레이어 카드 이미지 라벨들을 갖는 리스트
+        self.LcardPlayer2 = [] #플레이어 카드 이미지 라벨들을 갖는 리스트
+        self.LcardPlayer3 = [] #플레이어 카드 이미지 라벨들을 갖는 리스트
+        self.LcardDealer = []
         self.cardDeck =[i for i in range(40)]
         self.deckN = 0 #카드덱에서 몇번째 숫자를 선택하느냐 나타내는 변수
         self.window.mainloop()
