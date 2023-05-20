@@ -86,7 +86,6 @@ class Dori:
         self.LcardsDealer.append(Label(self.window, image=p))
         self.LcardsDealer[self.dealer.inHand() - 1].image = p
         self.LcardsDealer[self.dealer.inHand() - 1].place(x=550 + n * 30, y=250)
-        self.LdealerPts.configure(text=str(self.dealer.value()))
         #PlaySound('sounds/cardFilp1.wav', SND_FILENAME)
     def deal(self):
         if self.cards == 0:
