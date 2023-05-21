@@ -6,68 +6,102 @@ from Player import*
 import random
 
 class Dori:
-    def checkWinner(self):
+    def checkMade(self, n):
         pass
-        # if self.player.value() > 21:
-        #     self.Lstatus.configure(text="Player Busts")
-        #     PlaySound('BlackJack Resource/sounds/wrong.wav', SND_FILENAME)
-        # elif self.dealer.value() > 21:
-        #     self.Lstatus.configure(text="Dealer Busts")
-        #     self.playerMoney += self.betMoney * 2
-        #     PlaySound('BlackJack Resource/sounds/win.wav', SND_FILENAME)
-        # elif self.dealer.value() == self.player.value():
-        #     self.Lstatus.configure(text="Push")
-        #     self.playerMoney += self.betMoney
-        # elif self.dealer.value() < self.player.value():
-        #     self.Lstatus.configure(text="You won!!")
-        #     self.playerMoney += self.betMoney * 2
-        #     PlaySound('BlackJack Resource/sounds/win.wav', SND_FILENAME)
-        # else:
-        #      self.Lstatus.configure(text="Sorry you lost!")
-
+    def checkWinner(self):
+        self.checkMade(self.player1)
+        self.checkMade(self.player2)
+        self.checkMade(self.player3)
+        self.checkMade(self.dealer)
 
     def hitPlayer1(self,n):
         newCard = Card(self.cardDeck[self.deckN])
-        self.deckN += 1
+        number = self.cardDeck[self.deckN] // 4 + 1
         self.player1.addCard(newCard)
+        self.player1.addNumber(number)
+        self.deckN += 1
         p = PhotoImage(file='GodoriCards/'+newCard.filename())
         self.LcardPlayer1.append(Label(self.window, image=p))
         self.LcardPlayer1[self.player1.inHand()-1].image = p
-        self.LcardPlayer1[self.player1.inHand()-1].place(x=150+n*30, y=650)
-        self.Lplayer1Pts.configure(text=str(self.player1.value()))
-        #PlaySound('sounds/cardFilp1.wav',SND_FILENAME)
+        self.LcardPlayer1[self.player1.inHand()-1].place(x=80+n*70, y=650)
+        if n == 0:
+            self.P1card1.configure(text=str(number))
+        elif n == 1:
+            self.P1card2.configure(text=str(number))
+        elif n == 2:
+            self.P1card3.configure(text=str(number))
+        elif n == 3:
+            self.P1card4.configure(text=str(number))
+        elif n == 4:
+            self.P1card5.configure(text=str(number))
+
+
+
+
 
     def hitPlayer2(self,n):
         newCard = Card(self.cardDeck[self.deckN])
-        self.deckN += 1
+        number = self.cardDeck[self.deckN] // 4 + 1
         self.player2.addCard(newCard)
+        self.player2.addNumber(number)
+        self.deckN += 1
         p = PhotoImage(file='GodoriCards/'+newCard.filename())
         self.LcardPlayer2.append(Label(self.window, image=p))
         self.LcardPlayer2[self.player2.inHand()-1].image = p
-        self.LcardPlayer2[self.player2.inHand()-1].place(x=550+n*30, y=650)
-        self.Lplayer2Pts.configure(text=str(self.player2.value()))
-        #PlaySound('sounds/cardFilp1.wav',SND_FILENAME)
+        self.LcardPlayer2[self.player2.inHand()-1].place(x=480+n*70, y=650)
+        if n == 0:
+            self.P2card1.configure(text=str(number))
+        elif n == 1:
+            self.P2card2.configure(text=str(number))
+        elif n == 2:
+            self.P2card3.configure(text=str(number))
+        elif n == 3:
+            self.P2card4.configure(text=str(number))
+        elif n == 4:
+            self.P2card5.configure(text=str(number))
 
     def hitPlayer3(self,n):
         newCard = Card(self.cardDeck[self.deckN])
-        self.deckN += 1
+        number = self.cardDeck[self.deckN] // 4 + 1
         self.player3.addCard(newCard)
+        self.player3.addNumber(number)
+        self.deckN += 1
         p = PhotoImage(file='GodoriCards/'+newCard.filename())
         self.LcardPlayer3.append(Label(self.window, image=p))
         self.LcardPlayer3[self.player3.inHand()-1].image = p
-        self.LcardPlayer3[self.player3.inHand()-1].place(x=950+n*30, y=650)
-        self.Lplayer3Pts.configure(text=str(self.player3.value()))
-       # PlaySound('sounds/cardFilp1.wav',SND_FILENAME)
+        self.LcardPlayer3[self.player3.inHand()-1].place(x=880+n*70, y=650)
+        if n == 0:
+            self.P3card1.configure(text=str(number))
+        elif n == 1:
+            self.P3card2.configure(text=str(number))
+        elif n == 2:
+            self.P3card3.configure(text=str(number))
+        elif n == 3:
+            self.P3card4.configure(text=str(number))
+        elif n == 4:
+            self.P3card5.configure(text=str(number))
 
     def hitDealer(self,n):
         newCard = Card(self.cardDeck[self.deckN])
-        self.deckN += 1
+        number = self.cardDeck[self.deckN] // 4 + 1
         self.dealer.addCard(newCard)
+        self.dealer.addNumber(number)
+        self.deckN += 1
         p = PhotoImage(file='GodoriCards/'+newCard.filename())
         self.LcardDealer.append(Label(self.window, image=p))
         self.LcardDealer[self.dealer.inHand() - 1].image = p
-        self.LcardDealer[self.dealer.inHand() - 1].place(x=550 + n * 30, y=250)
-        #PlaySound('sounds/cardFilp1.wav', SND_FILENAME)
+        self.LcardDealer[self.dealer.inHand() - 1].place(x=480 + n * 70, y=250)
+        if n == 0:
+            self.Dcard1.configure(text=str(number))
+        elif n == 1:
+            self.Dcard2.configure(text=str(number))
+        elif n == 2:
+            self.Dcard3.configure(text=str(number))
+        elif n == 3:
+            self.Dcard4.configure(text=str(number))
+        elif n == 4:
+            self.Dcard5.configure(text=str(number))
+
     def deal(self):
         if self.cards == 0:
             random.shuffle(self.cardDeck)
@@ -111,7 +145,7 @@ class Dori:
             self.LP1betMoney.configure(text= str(self.P1betMoney)+"만")
             self.playerMoney -= 5
             self.LplayerMoney.configure(text=str(self.playerMoney)+"만")
-            #PlaySound('BlackJack Resource/sounds/chip.wav', SND_FILENAME)
+
         else:
             self.betMoney -= 5
     def pressedP1B1(self):
@@ -122,7 +156,6 @@ class Dori:
             self.LP1betMoney.configure(text=str(self.P1betMoney) + "만")
             self.playerMoney -= 1
             self.LplayerMoney.configure(text=str(self.playerMoney) + "만")
-            # PlaySound('BlackJack Resource/sounds/chip.wav', SND_FILENAME)
         else:
             self.betMoney -= 1
     def pressedP2B5(self):
@@ -133,7 +166,6 @@ class Dori:
             self.LP2betMoney.configure(text=str(self.P2betMoney) + "만")
             self.playerMoney -= 5
             self.LplayerMoney.configure(text=str(self.playerMoney) + "만")
-            # PlaySound('BlackJack Resource/sounds/chip.wav', SND_FILENAME)
         else:
             self.betMoney -= 5
     def pressedP2B1(self):
@@ -144,7 +176,6 @@ class Dori:
             self.LP2betMoney.configure(text=str(self.P2betMoney) + "만")
             self.playerMoney -= 1
             self.LplayerMoney.configure(text=str(self.playerMoney) + "만")
-            # PlaySound('BlackJack Resource/sounds/chip.wav', SND_FILENAME)
         else:
             self.betMoney -= 1
     def pressedP3B5(self):
@@ -155,7 +186,6 @@ class Dori:
             self.LP3betMoney.configure(text=str(self.P3betMoney) + "만")
             self.playerMoney -= 5
             self.LplayerMoney.configure(text=str(self.playerMoney) + "만")
-            # PlaySound('BlackJack Resource/sounds/chip.wav', SND_FILENAME)
         else:
             self.betMoney -= 5
     def pressedP3B1(self):
@@ -166,7 +196,6 @@ class Dori:
             self.LP3betMoney.configure(text=str(self.P3betMoney) + "만")
             self.playerMoney -= 1
             self.LplayerMoney.configure(text=str(self.playerMoney) + "만")
-            # PlaySound('BlackJack Resource/sounds/chip.wav', SND_FILENAME)
         else:
             self.betMoney -= 1
     def pressedDeal(self):
@@ -237,6 +266,26 @@ class Dori:
         self.P1Lstatus.configure(text="")
         self.P2Lstatus.configure(text="")
         self.P3Lstatus.configure(text="")
+        self.Dcard1.configure(text="")
+        self.Dcard2.configure(text="")
+        self.Dcard3.configure(text="")
+        self.Dcard4.configure(text="")
+        self.Dcard5.configure(text="")
+        self.P1card1.configure(text="")
+        self.P1card2.configure(text="")
+        self.P1card3.configure(text="")
+        self.P1card4.configure(text="")
+        self.P1card5.configure(text="")
+        self.P2card1.configure(text="")
+        self.P2card2.configure(text="")
+        self.P2card3.configure(text="")
+        self.P2card4.configure(text="")
+        self.P2card5.configure(text="")
+        self.P3card1.configure(text="")
+        self.P3card2.configure(text="")
+        self.P3card3.configure(text="")
+        self.P3card4.configure(text="")
+        self.P3card5.configure(text="")
 
         self.LcardPlayer1 = []
         self.LcardPlayer2 = []
@@ -304,49 +353,49 @@ class Dori:
         self.LplayerMoney = Label(text='1000만', width=7, height=1, font=self.fontstyle, bg='#205928', fg='yellow')
         self.LplayerMoney.place(x=1400, y=900)
 
-        self.P1card1 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.P1card1.place(x=100, y=800)
-        self.P1card2 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.P1card2.place(x=500, y=300)
-        self.P1card3 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.P1card3.place(x=500, y=300)
-        self.P1card4 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.P1card4.place(x=500, y=300)
-        self.P1card5 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.P1card5.place(x=500, y=300)
+        self.P1card1 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.P1card1.place(x=90, y=600)
+        self.P1card2 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.P1card2.place(x=160, y=600)
+        self.P1card3 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.P1card3.place(x=230, y=600)
+        self.P1card4 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.P1card4.place(x=300, y=600)
+        self.P1card5 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.P1card5.place(x=370, y=600)
 
-        self.P2card1 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.P2card1.place(x=500, y=300)
-        self.P2card2 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.P2card2.place(x=500, y=300)
-        self.P2card3 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.P2card3.place(x=500, y=300)
-        self.P2card4 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.P2card4.place(x=500, y=300)
-        self.P2card5 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.P2card5.place(x=500, y=300)
+        self.P2card1 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.P2card1.place(x=490, y=600)
+        self.P2card2 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.P2card2.place(x=560, y=600)
+        self.P2card3 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.P2card3.place(x=630, y=600)
+        self.P2card4 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.P2card4.place(x=700, y=600)
+        self.P2card5 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.P2card5.place(x=770, y=600)
 
-        self.P3card1 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.P3card1.place(x=500, y=300)
-        self.P3card2 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.P3card2.place(x=500, y=300)
-        self.P3card3 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.P3card3.place(x=500, y=300)
-        self.P3card4 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.P3card4.place(x=500, y=300)
-        self.P3card5 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.P3card5.place(x=500, y=300)
+        self.P3card1 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.P3card1.place(x=890, y=600)
+        self.P3card2 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.P3card2.place(x=960, y=600)
+        self.P3card3 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.P3card3.place(x=1030, y=600)
+        self.P3card4 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.P3card4.place(x=1100, y=600)
+        self.P3card5 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.P3card5.place(x=1170, y=600)
 
-        self.Dcard1 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.Dcard1.place(x=500, y=300)
-        self.Dcard2 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.Dcard2.place(x=500, y=300)
-        self.Dcard3 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.Dcard3.place(x=500, y=300)
-        self.Dcard4 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.Dcard4.place(x=500, y=300)
-        self.Dcard5 = Label(text='', width=1, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.Dcard5.place(x=500, y=300)
+        self.Dcard1 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.Dcard1.place(x=490, y=200)
+        self.Dcard2 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.Dcard2.place(x=560, y=200)
+        self.Dcard3 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.Dcard3.place(x=630, y=200)
+        self.Dcard4 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.Dcard4.place(x=700, y=200)
+        self.Dcard5 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.Dcard5.place(x=770, y=200)
 
         self.Lplayer1Pts = Label(text='', width=6, height=1, font=self.fontstyle, bg='green', fg='white')
         self.Lplayer1Pts.place(x=300, y=300)
