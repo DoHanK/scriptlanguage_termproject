@@ -6,34 +6,317 @@ from Player import*
 import random
 
 class Dori:
-    def checkMade(self, n):
-        pass
+    def checkPedi(self, p, n1,n2,n3):
+        pedi_list = []
+        sub_list = []
+        sub_pedi = 0
+        f_n1 = -1
+        f_n2 = -1
+        f_n3 = -1
+        if n1 == n2:
+            for x in range(len(p.cardtype)):
+                if p.cardtype[x] == n1:
+                    if f_n1 == -1:
+                        pedi_list.append(x)
+                        f_n1 = x
+                    elif p.number[x] <= p.number[f_n1]:
+                        if f_n2 == -1:
+                            f_n2 = f_n1
+                            f_n1 = x
+                            pedi_list.append(x)
+                        else:
+                            pedi_list.remove(f_n1)
+                            f_n1 = x
+                            pedi_list.append(x)
+                elif p.cardtype[x] == n3:
+                    if f_n3 == -1:
+                        pedi_list.append(x)
+                        f_n3 = x
+                    elif p.number[x] <= p.number[f_n3]:
+                        pedi_list.remove(f_n3)
+                        f_n3 = x
+                        pedi_list.append(x)
+        else:
+            for x in range(len(p.cardtype)):
+                if p.cardtype[x] == n1:
+                    if f_n1 == -1:
+                        pedi_list.append(x)
+                        f_n1 = x
+                    elif p.number[x] <= p.number[f_n1]:
+                        pedi_list.remove(f_n1)
+                        f_n1 = x
+                        pedi_list.append(x)
+                elif p.cardtype[x] == n2:
+                    if f_n2 == -1:
+                        pedi_list.append(x)
+                        f_n2 = x
+                    elif p.number[x] <= p.number[f_n2]:
+                        pedi_list.remove(f_n2)
+                        f_n2 = x
+                        pedi_list.append(x)
+                elif p.cardtype[x] == n3:
+                    if f_n3 == -1:
+                        pedi_list.append(x)
+                        f_n3 = x
+                    elif p.number[x] <= p.number[f_n3]:
+                        pedi_list.remove(f_n3)
+                        f_n3 = x
+                        pedi_list.append(x)
+        for x in range(len(p.number)):
+            if pedi_list.count(x) == 0:
+                sub_list.append(p.number[x])
+            else:
+                p.made_card[x] = 1
+
+        # 족보체크
+        # 끗 : 0 ~ 9
+        # 땡 : 10 ~ 19
+        # 광땡 : 113, 118, 138
+        sub_list.sort()
+        x = sub_list[0]
+        y = sub_list[1]
+
+        if x // 4 == 0 and x % 4 == 0:
+            if y // 4 == 2 and y % 4 == 0:
+                sub_pedi = 113
+                p.Lpedi = ' 13광땡'
+            if y // 4 == 7 and y % 4 == 0:
+                sub_pedi = 118
+                p.Lpedi = ' 18광땡'
+        elif x // 4 == 2 and x % 4 == 0:
+            if y // 4 == 7 and y % 4 == 0:
+                sub_pedi =  138
+                p.Lpedi = ' 38광땡'
+        elif x // 4 == y // 4:
+            sub_pedi =  10 + x // 4
+            p.Lpedi = " "+str((x//4) + 1) +'땡'
+        else:
+            sub_pedi = ((x//4 + y//4)+2) % 10
+            if sub_pedi == 9:
+                p.Lpedi = ' 갑오'
+            elif sub_pedi == 0:
+                p.Lpedi = ' 망통'
+            else:
+                p.Lpedi = " "+str(sub_pedi) +"끗"
+
+        if sub_pedi > p.pedigree:
+            for x in range(5):
+                p.made_card[x] = 0
+            p.pedigree = sub_pedi
+            for x in pedi_list:
+                p.made_card[x] = 1
+            return True
+        return False
+
+
+
+    def checkMade(self, p):
+        sub_pedi = 0
+        if p.cardtype.count(1) >= 2:
+            if p.cardtype.count(8) >= 1:
+                p.made = '콩콩팓(1 1 8)'
+                p.pedigree = self.checkPedi(p, 1, 1, 8)
+        if p.cardtype.count(1) >= 1:
+            if p.cardtype.count(2) >= 1:
+                if p.cardtype.count(7) >= 1:
+                    if self.checkPedi(p,1,2,7):
+                        p.made = '삐리칠(1 2 7)'
+            if p.cardtype.count(3) >= 1:
+                if p.cardtype.count(6) >= 1:
+                    if self.checkPedi(p, 1, 3, 6):
+                        p.made = '물삼육(1 3 6)'
+            if p.cardtype.count(4) >= 1:
+                if p.cardtype.count(5) >= 1:
+                    if self.checkPedi(p,1,4,5):
+                        p.made = '빽새오(1 4 5)'
+            if p.cardtype.count(9) >= 1:
+                if p.cardtype.count(10) >= 1:
+                    if self.checkPedi(p,1,9,10):
+                        p.made = '삥구장(1 9 10)'
+        if p.cardtype.count(2) >= 1:
+            if p.cardtype.count(2) >= 2:
+                if p.cardtype.count(6) >= 1:
+                    if  self.checkPedi(p,2,2,6):
+                        p.made = '니니육(2 2 6)'
+            if p.cardtype.count(3) >= 1:
+                if p.cardtype.count(5) >= 1:
+                    if  self.checkPedi(p,2,3,5):
+                        p.made = '이삼오(2 3 5)'
+            if p.cardtype.count(8) >= 1:
+                if p.cardtype.count(10) >= 1:
+                    if  self.checkPedi(p,2,8,10):
+                        p.made = '이판장(2 8 10)'
+        if p.cardtype.count(3) >= 1:
+            if p.cardtype.count(3) >= 2:
+                if p.cardtype.count(4) >= 1:
+                    if  self.checkPedi(p,3,3,4):
+                        p.made = '심심새(3 3 4)'
+            if p.cardtype.count(7) >= 1:
+                if p.cardtype.count(10) >= 1:
+                    if  self.checkPedi(p,3,7,10):
+                        p.made = '삼칠장(3 7 10)'
+            if p.cardtype.count(8) >= 1:
+                if p.cardtype.count(9) >= 1:
+                    if  self.checkPedi(p,3,8,9):
+                        p.made = '삼빡구(3 8 9)'
+        if p.cardtype.count(4) >= 1:
+            if p.cardtype.count(4) >= 2:
+                if p.cardtype.count(2) >= 1:
+                    if self.checkPedi(p,4,4,2):
+                        p.made = '살살이(4 4 2)'
+            if p.cardtype.count(6) >= 1:
+                if p.cardtype.count(10) >= 1:
+                    if self.checkPedi(p,4,6,10) :
+                        p.made = '사륙장(4 6 10)'
+            if p.cardtype.count(7) >= 1:
+                if p.cardtype.count(9) >= 1:
+                    if  self.checkPedi(p,4,7,9):
+                        p.made = '사칠구(4 7 9)'
+        if p.cardtype.count(5) >= 1:
+            if p.cardtype.count(5) >= 2:
+                if p.cardtype.count(10) >= 1:
+                    if self.checkPedi(p,5,5,10):
+                        p.made = '꼬꼬장(5 5 10)'
+            if p.cardtype.count(6) >= 1:
+                if p.cardtype.count(9) >= 1:
+                    if  self.checkPedi(p,5,6,9):
+                        p.made = '오륙구(5 6 9)'
+            if p.cardtype.count(7) >= 1:
+                if p.cardtype.count(8) >= 1:
+                    if self.checkPedi(p,5,7,8):
+                        p.made = '오리발(5 7 8)'
+        if p.cardtype.count(6) >= 2:
+            if p.cardtype.count(8) >= 1:
+                if  self.checkPedi(p, 6, 6, 8):
+                    p.made = '쭉쭉팔(6 6 8)'
+        if p.cardtype.count(7) >= 2:
+            if p.cardtype.count(6) >= 1:
+                if  self.checkPedi(p, 7, 7,6):
+                    p.made = '철철육(7 7 6)'
+        if p.cardtype.count(8) >= 2:
+            if p.cardtype.count(4) >= 1:
+                if  self.checkPedi(p, 8, 8, 4):
+                    p.made = '팍팍싸(8 8 4)'
+        if p.cardtype.count(9) >= 2:
+            if p.cardtype.count(2) >= 1:
+                if  self.checkPedi(p, 9, 9, 2):
+                    p.made = '구구리(9 9 2)'
+        if p.pedigree == -1:
+            p.made = '노 메이드'
+
     def checkWinner(self):
         self.checkMade(self.player1)
         self.checkMade(self.player2)
         self.checkMade(self.player3)
         self.checkMade(self.dealer)
 
+        if self.player1.pedigree != -1:
+            for x in range(5):
+                if self.player1.made_card[x] == 1:
+                    self.LcardPlayer1[x].place(x=80 + x * 70, y=690)
+                    if x == 0:
+                        self.P1card1.configure(text=str(self.player1.number[0] // 4 + 1), fg='yellow')
+                    elif x == 1:
+                        self.P1card2.configure(text=str(self.player1.number[1] // 4 + 1), fg='yellow')
+                    elif x == 2:
+                        self.P1card3.configure(text=str(self.player1.number[2] // 4 + 1), fg='yellow')
+                    elif x == 3:
+                        self.P1card4.configure(text=str(self.player1.number[3] // 4 + 1), fg='yellow')
+                    elif x == 4:
+                        self.P1card5.configure(text=str(self.player1.number[4] // 4 + 1), fg='yellow')
+        if self.player2.pedigree != -1:
+            for x in range(5):
+                if self.player2.made_card[x] == 1:
+                    self.LcardPlayer2[x].place(x=480 + x * 70, y=690)
+                    if x == 0:
+                        self.P2card1.configure(text=str(self.player2.number[0] // 4 + 1), fg='yellow')
+                    elif x == 1:
+                        self.P2card2.configure(text=str(self.player2.number[1] // 4 + 1), fg='yellow')
+                    elif x == 2:
+                        self.P2card3.configure(text=str(self.player2.number[2] // 4 + 1), fg='yellow')
+                    elif x == 3:
+                        self.P2card4.configure(text=str(self.player2.number[3] // 4 + 1), fg='yellow')
+                    elif x == 4:
+                        self.P2card5.configure(text=str(self.player2.number[4] // 4 + 1), fg='yellow')
+        if self.player3.pedigree != -1:
+            for x in range(5):
+                if self.player3.made_card[x] == 1:
+                    self.LcardPlayer3[x].place(x=880 + x * 70, y=690)
+                    if x == 0:
+                        self.P3card1.configure(text=str(self.player3.number[0] // 4 + 1), fg='yellow')
+                    elif x == 1:
+                        self.P3card2.configure(text=str(self.player3.number[1] // 4 + 1), fg='yellow')
+                    elif x == 2:
+                        self.P3card3.configure(text=str(self.player3.number[2] // 4 + 1), fg='yellow')
+                    elif x == 3:
+                        self.P3card4.configure(text=str(self.player3.number[3] // 4 + 1), fg='yellow')
+                    elif x == 4:
+                        self.P3card5.configure(text=str(self.player3.number[4] // 4 + 1), fg='yellow')
+        if self.dealer.pedigree != -1:
+            for x in range(5):
+                if self.dealer.made_card[x] == 1:
+                    self.LcardDealer[x].place(x=480 + x * 70, y=290)
+                    if x == 0:
+                        self.Dcard1.configure(text=str(self.dealer.number[0] // 4 + 1), fg='yellow')
+                    elif x == 1:
+                        self.Dcard2.configure(text=str(self.dealer.number[1] // 4 + 1), fg='yellow')
+                    elif x == 2:
+                        self.Dcard3.configure(text=str(self.dealer.number[2] // 4 + 1), fg='yellow')
+                    elif x == 3:
+                        self.Dcard4.configure(text=str(self.dealer.number[3] // 4 + 1), fg='yellow')
+                    elif x == 4:
+                        self.Dcard5.configure(text=str(self.dealer.number[4] // 4 + 1), fg='yellow')
+
+
+        self.Lplayer1Pts.configure(text=self.player1.made + self.player1.Lpedi,fg='cyan')
+        self.Lplayer2Pts.configure(text=self.player2.made+self.player2.Lpedi,fg='cyan')
+        self.Lplayer3Pts.configure(text=self.player3.made+self.player3.Lpedi,fg='cyan')
+        self.LDealerPts.configure(text=self.dealer.made+self.dealer.Lpedi,fg='cyan')
+
+        if self.dealer.pedigree >= self.player1.pedigree:
+            self.P1Lstatus.configure(text='패',fg='red')
+        else:
+            self.P1Lstatus.configure(text='승',fg='red')
+            self.playerMoney += self.P1betMoney * 2
+
+
+        if self.dealer.pedigree >= self.player2.pedigree:
+            self.P2Lstatus.configure(text='패',fg='red')
+        else:
+            self.P2Lstatus.configure(text='승',fg='red')
+            self.playerMoney += self.P2betMoney * 2
+
+
+        if self.dealer.pedigree >= self.player3.pedigree:
+            self.P3Lstatus.configure(text='패',fg='red')
+        else:
+            self.P3Lstatus.configure(text='승',fg='red')
+            self.playerMoney += self.P3betMoney * 2
+        self.LplayerMoney.configure(text=str(self.playerMoney)+'만')
+
+
+
     def hitPlayer1(self,n):
         newCard = Card(self.cardDeck[self.deckN])
-        number = self.cardDeck[self.deckN] // 4 + 1
+        number = self.cardDeck[self.deckN]
         self.player1.addCard(newCard)
         self.player1.addNumber(number)
+        self.player1.addCardtype(number // 4 + 1)
         self.deckN += 1
         p = PhotoImage(file='GodoriCards/'+newCard.filename())
         self.LcardPlayer1.append(Label(self.window, image=p))
         self.LcardPlayer1[self.player1.inHand()-1].image = p
         self.LcardPlayer1[self.player1.inHand()-1].place(x=80+n*70, y=650)
         if n == 0:
-            self.P1card1.configure(text=str(number))
+            self.P1card1.configure(text=str(number // 4 + 1))
         elif n == 1:
-            self.P1card2.configure(text=str(number))
+            self.P1card2.configure(text=str(number // 4 + 1))
         elif n == 2:
-            self.P1card3.configure(text=str(number))
+            self.P1card3.configure(text=str(number // 4 + 1))
         elif n == 3:
-            self.P1card4.configure(text=str(number))
+            self.P1card4.configure(text=str(number // 4 + 1))
         elif n == 4:
-            self.P1card5.configure(text=str(number))
+            self.P1card5.configure(text=str(number // 4 + 1))
 
 
 
@@ -41,66 +324,69 @@ class Dori:
 
     def hitPlayer2(self,n):
         newCard = Card(self.cardDeck[self.deckN])
-        number = self.cardDeck[self.deckN] // 4 + 1
+        number = self.cardDeck[self.deckN]
         self.player2.addCard(newCard)
         self.player2.addNumber(number)
+        self.player2.addCardtype(number // 4 + 1)
         self.deckN += 1
         p = PhotoImage(file='GodoriCards/'+newCard.filename())
         self.LcardPlayer2.append(Label(self.window, image=p))
         self.LcardPlayer2[self.player2.inHand()-1].image = p
         self.LcardPlayer2[self.player2.inHand()-1].place(x=480+n*70, y=650)
         if n == 0:
-            self.P2card1.configure(text=str(number))
+            self.P2card1.configure(text=str(number // 4 + 1))
         elif n == 1:
-            self.P2card2.configure(text=str(number))
+            self.P2card2.configure(text=str(number // 4 + 1))
         elif n == 2:
-            self.P2card3.configure(text=str(number))
+            self.P2card3.configure(text=str(number // 4 + 1))
         elif n == 3:
-            self.P2card4.configure(text=str(number))
+            self.P2card4.configure(text=str(number // 4 + 1))
         elif n == 4:
-            self.P2card5.configure(text=str(number))
+            self.P2card5.configure(text=str(number // 4 + 1))
 
     def hitPlayer3(self,n):
         newCard = Card(self.cardDeck[self.deckN])
-        number = self.cardDeck[self.deckN] // 4 + 1
+        number = self.cardDeck[self.deckN]
         self.player3.addCard(newCard)
         self.player3.addNumber(number)
+        self.player3.addCardtype(number // 4 + 1)
         self.deckN += 1
         p = PhotoImage(file='GodoriCards/'+newCard.filename())
         self.LcardPlayer3.append(Label(self.window, image=p))
         self.LcardPlayer3[self.player3.inHand()-1].image = p
         self.LcardPlayer3[self.player3.inHand()-1].place(x=880+n*70, y=650)
         if n == 0:
-            self.P3card1.configure(text=str(number))
+            self.P3card1.configure(text=str(number // 4 + 1))
         elif n == 1:
-            self.P3card2.configure(text=str(number))
+            self.P3card2.configure(text=str(number // 4 + 1))
         elif n == 2:
-            self.P3card3.configure(text=str(number))
+            self.P3card3.configure(text=str(number // 4 + 1))
         elif n == 3:
-            self.P3card4.configure(text=str(number))
+            self.P3card4.configure(text=str(number // 4 + 1))
         elif n == 4:
-            self.P3card5.configure(text=str(number))
+            self.P3card5.configure(text=str(number // 4 + 1))
 
     def hitDealer(self,n):
         newCard = Card(self.cardDeck[self.deckN])
-        number = self.cardDeck[self.deckN] // 4 + 1
+        number = self.cardDeck[self.deckN]
         self.dealer.addCard(newCard)
         self.dealer.addNumber(number)
+        self.dealer.addCardtype(number // 4 + 1)
         self.deckN += 1
         p = PhotoImage(file='GodoriCards/'+newCard.filename())
         self.LcardDealer.append(Label(self.window, image=p))
         self.LcardDealer[self.dealer.inHand() - 1].image = p
         self.LcardDealer[self.dealer.inHand() - 1].place(x=480 + n * 70, y=250)
         if n == 0:
-            self.Dcard1.configure(text=str(number))
+            self.Dcard1.configure(text=str(number // 4 + 1))
         elif n == 1:
-            self.Dcard2.configure(text=str(number))
+            self.Dcard2.configure(text=str(number // 4 + 1))
         elif n == 2:
-            self.Dcard3.configure(text=str(number))
+            self.Dcard3.configure(text=str(number // 4 + 1))
         elif n == 3:
-            self.Dcard4.configure(text=str(number))
+            self.Dcard4.configure(text=str(number // 4 + 1))
         elif n == 4:
-            self.Dcard5.configure(text=str(number))
+            self.Dcard5.configure(text=str(number // 4 + 1))
 
     def deal(self):
         if self.cards == 0:
@@ -266,26 +552,32 @@ class Dori:
         self.P1Lstatus.configure(text="")
         self.P2Lstatus.configure(text="")
         self.P3Lstatus.configure(text="")
-        self.Dcard1.configure(text="")
-        self.Dcard2.configure(text="")
-        self.Dcard3.configure(text="")
-        self.Dcard4.configure(text="")
-        self.Dcard5.configure(text="")
-        self.P1card1.configure(text="")
-        self.P1card2.configure(text="")
-        self.P1card3.configure(text="")
-        self.P1card4.configure(text="")
-        self.P1card5.configure(text="")
-        self.P2card1.configure(text="")
-        self.P2card2.configure(text="")
-        self.P2card3.configure(text="")
-        self.P2card4.configure(text="")
-        self.P2card5.configure(text="")
-        self.P3card1.configure(text="")
-        self.P3card2.configure(text="")
-        self.P3card3.configure(text="")
-        self.P3card4.configure(text="")
-        self.P3card5.configure(text="")
+        self.Lplayer1Pts.configure(text="")
+        self.Lplayer2Pts.configure(text="")
+        self.Lplayer3Pts.configure(text="")
+        self.LDealerPts.configure(text="")
+        self.Dcard1.configure(text="",fg='white')
+        self.Dcard2.configure(text="",fg='white')
+        self.Dcard3.configure(text="",fg='white')
+        self.Dcard4.configure(text="",fg='white')
+        self.Dcard5.configure(text="",fg='white')
+        self.P1card1.configure(text="",fg='white')
+        self.P1card2.configure(text="",fg='white')
+        self.P1card3.configure(text="",fg='white')
+        self.P1card4.configure(text="",fg='white')
+        self.P1card5.configure(text="",fg='white')
+        self.P2card1.configure(text="",fg='white')
+        self.P2card2.configure(text="",fg='white')
+        self.P2card3.configure(text="",fg='white')
+        self.P2card4.configure(text="",fg='white')
+        self.P2card5.configure(text="",fg='white')
+        self.P3card1.configure(text="",fg='white')
+        self.P3card2.configure(text="",fg='white')
+        self.P3card3.configure(text="",fg='white')
+        self.P3card4.configure(text="",fg='white')
+        self.P3card5.configure(text="",fg='white')
+
+
 
         self.LcardPlayer1 = []
         self.LcardPlayer2 = []
@@ -301,7 +593,6 @@ class Dori:
         self.LP1betMoney.configure(text = str(self.P1betMoney)+'만')
         self.LP2betMoney.configure(text= str(self.P2betMoney)+'만')
         self.LP3betMoney.configure(text=str(self.P3betMoney)+'만')
-        self.LplayerMoney.configure(text=str(self.playerMoney)+'만')
         self.player1.reset()
         self.player2.reset()
         self.player3.reset()
@@ -397,26 +688,26 @@ class Dori:
         self.Dcard5 = Label(text='', width=2, height=1, font=self.fontstyle, bg='green', fg='white')
         self.Dcard5.place(x=770, y=200)
 
-        self.Lplayer1Pts = Label(text='', width=6, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.Lplayer1Pts.place(x=300, y=300)
+        self.Lplayer1Pts = Label(text='', width=20, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.Lplayer1Pts.place(x=90, y=550)
 
-        self.Lplayer2Pts = Label(text='', width=6, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.Lplayer2Pts.place(x=300, y=300)
+        self.Lplayer2Pts = Label(text='', width=20, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.Lplayer2Pts.place(x=490, y=550)
 
-        self.Lplayer3Pts = Label(text='', width=6, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.Lplayer3Pts.place(x=300, y=300)
+        self.Lplayer3Pts = Label(text='', width=20, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.Lplayer3Pts.place(x=890, y=550)
 
-        self.LDealerPts = Label(text='', width=6, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.LDealerPts.place(x=300, y=300)
+        self.LDealerPts = Label(text='', width=20, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.LDealerPts.place(x=490, y=150)
 
-        self.P1Lstatus = Label(text='', width=15, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.P1Lstatus.place(x=500, y=300)
+        self.P1Lstatus = Label(text='', width=5, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.P1Lstatus.place(x=90, y=500)
 
-        self.P2Lstatus = Label(text='', width=15, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.P2Lstatus.place(x=500, y=300)
+        self.P2Lstatus = Label(text='', width=5, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.P2Lstatus.place(x=490, y=500)
 
-        self.P3Lstatus = Label(text='', width=15, height=1, font=self.fontstyle, bg='green', fg='white')
-        self.P3Lstatus.place(x=500, y=300)
+        self.P3Lstatus = Label(text='', width=5, height=1, font=self.fontstyle, bg='green', fg='white')
+        self.P3Lstatus.place(x=890, y=500)
 
 
     def __init__(self):
