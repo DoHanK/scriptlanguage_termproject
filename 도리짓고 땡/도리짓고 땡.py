@@ -7,7 +7,7 @@ import random
 
 class Dori:
     def checkPedi(self, p, n1,n2,n3):
-        pedi_list = []
+        made_list = []
         sub_list = []
         sub_pedi = 0
         f_n1 = -1
@@ -17,56 +17,56 @@ class Dori:
             for x in range(len(p.cardtype)):
                 if p.cardtype[x] == n1:
                     if f_n1 == -1:
-                        pedi_list.append(x)
+                        made_list.append(x)
                         f_n1 = x
-                    elif p.number[x] <= p.number[f_n1]:
-                        if f_n2 == -1:
-                            f_n2 = f_n1
+                    elif f_n2 == -1:
+                        made_list.append(x)
+                        f_n2 = x
+                        if p.number[f_n1] > p.number[f_n2]:
+                            f_n1, f_n2 = f_n2, f_n1
+                    else:
+                        if p.number[f_n1] < p.number[x]:
+                            made_list.remove(f_n1)
                             f_n1 = x
-                            pedi_list.append(x)
-                        else:
-                            pedi_list.remove(f_n1)
-                            f_n1 = x
-                            pedi_list.append(x)
+                            made_list.append(x)
+
                 elif p.cardtype[x] == n3:
                     if f_n3 == -1:
-                        pedi_list.append(x)
+                        made_list.append(x)
                         f_n3 = x
-                    elif p.number[x] <= p.number[f_n3]:
-                        pedi_list.remove(f_n3)
+                    elif p.number[x] >= p.number[f_n3]:
+                        made_list.remove(f_n3)
                         f_n3 = x
-                        pedi_list.append(x)
+                        made_list.append(x)
         else:
             for x in range(len(p.cardtype)):
                 if p.cardtype[x] == n1:
                     if f_n1 == -1:
-                        pedi_list.append(x)
+                        made_list.append(x)
                         f_n1 = x
-                    elif p.number[x] <= p.number[f_n1]:
-                        pedi_list.remove(f_n1)
+                    elif p.number[x] >= p.number[f_n1]:
+                        made_list.remove(f_n1)
                         f_n1 = x
-                        pedi_list.append(x)
+                        made_list.append(x)
                 elif p.cardtype[x] == n2:
                     if f_n2 == -1:
-                        pedi_list.append(x)
+                        made_list.append(x)
                         f_n2 = x
-                    elif p.number[x] <= p.number[f_n2]:
-                        pedi_list.remove(f_n2)
+                    elif p.number[x] >= p.number[f_n2]:
+                        made_list.remove(f_n2)
                         f_n2 = x
-                        pedi_list.append(x)
+                        made_list.append(x)
                 elif p.cardtype[x] == n3:
                     if f_n3 == -1:
-                        pedi_list.append(x)
+                        made_list.append(x)
                         f_n3 = x
-                    elif p.number[x] <= p.number[f_n3]:
-                        pedi_list.remove(f_n3)
+                    elif p.number[x] >= p.number[f_n3]:
+                        made_list.remove(f_n3)
                         f_n3 = x
-                        pedi_list.append(x)
+                        made_list.append(x)
         for x in range(len(p.number)):
-            if pedi_list.count(x) == 0:
+            if made_list.count(x) == 0:
                 sub_list.append(p.number[x])
-            else:
-                p.made_card[x] = 1
 
         # 족보체크
         # 끗 : 0 ~ 9
@@ -79,32 +79,37 @@ class Dori:
         if x // 4 == 0 and x % 4 == 0:
             if y // 4 == 2 and y % 4 == 0:
                 sub_pedi = 113
-                p.Lpedi = ' 13광땡'
             if y // 4 == 7 and y % 4 == 0:
                 sub_pedi = 118
-                p.Lpedi = ' 18광땡'
         elif x // 4 == 2 and x % 4 == 0:
             if y // 4 == 7 and y % 4 == 0:
                 sub_pedi =  138
-                p.Lpedi = ' 38광땡'
         elif x // 4 == y // 4:
-            sub_pedi =  10 + x // 4
-            p.Lpedi = " "+str((x//4) + 1) +'땡'
+            sub_pedi = 10 + x // 4
         else:
             sub_pedi = ((x//4 + y//4)+2) % 10
-            if sub_pedi == 9:
-                p.Lpedi = ' 갑오'
-            elif sub_pedi == 0:
-                p.Lpedi = ' 망통'
-            else:
-                p.Lpedi = " "+str(sub_pedi) +"끗"
 
         if sub_pedi > p.pedigree:
             for x in range(5):
                 p.made_card[x] = 0
             p.pedigree = sub_pedi
-            for x in pedi_list:
+            for x in made_list:
                 p.made_card[x] = 1
+            if 0 <= sub_pedi <=9:
+                if sub_pedi == 9:
+                    p.Lpedi = ' 갑오'
+                elif sub_pedi == 0:
+                    p.Lpedi = ' 망통'
+                else:
+                    p.Lpedi = " " + str(sub_pedi) + "끗"
+            elif 10 <= sub_pedi <= 19:
+                p.Lpedi = " " + str((sub_pedi % 10) + 1) + '땡'
+            elif sub_pedi == 113:
+                p.Lpedi = ' 13광땡'
+            elif sub_pedi == 118:
+                p.Lpedi = ' 18광땡'
+            elif sub_pedi == 138:
+                p.Lpedi = ' 38광땡'
             return True
         return False
 
