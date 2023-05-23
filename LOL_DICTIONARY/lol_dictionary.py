@@ -18,26 +18,18 @@ class LOLGUI:
         im = Image.open(BytesIO(raw_data))
         self.image = ImageTk.PhotoImage(im)
 
-
-
         if self.profil_img != None:
-            self.profil_img.place_forget()
+            self.profil_img.pack_forget()
         if self.profil_level != None:
-            self.profil_level.place_forget()
+            self.profil_level.pack_forget()
         if self.profil_sololank != None:
-            self.profil_sololank.place_forget()
+            self.profil_sololank.pack_forget()
         if self.profil_freelank != None:
-            self.profil_freelank.place_forget()
-
-        self.profil_img = Label(self.window, image = self.image, height=300, width=300)
-        self.profil_img.place(x=0, y=30)
-        self.profil_level = Label(self.window, text="LV."+self.person.getlevel(), font=self.TempFont)
-        self.profil_level.place(x=310, y=30)
-        self.profil_sololank = Label(self.window, text=self.person.getsololank(), font=self.TempFont)
-        self.profil_sololank.place(x=310, y=60)
-        self.profil_freelank = Label(self.window, text=self.person.getfreelank(), font=self.TempFont)
-        self.profil_freelank.place(x=310, y=90)
-
+            self.profil_freelank.pack_forget()
+        self.profil_img = Label(self.window, image = self.image, height=300, width=300).place(x=0, y=30)
+        self.profil_level = Label(self.window, text="LV."+self.person.getlevel(), font=self.TempFont).place(x=310, y=30)
+        self.profil_sololank = Label(self.window, text=self.person.getsololank(), font=self.TempFont).place(x=310, y=60)
+        self.profil_freelank = Label(self.window, text=self.person.getfreelank(), font=self.TempFont).place(x=310, y=90)
 
     def __init__(self):
         self.window = Tk()
