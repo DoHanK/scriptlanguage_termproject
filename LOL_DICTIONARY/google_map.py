@@ -10,6 +10,7 @@ def get_pcbang_info(location):
     res.raise_for_status()
 
     soup = BeautifulSoup(res.text, 'html.parser')
+    print(res.text,"utp-8")
 
     pcbang_list = soup.find_all('li', attrs={'class': 'item ng-tns-c27-1'})
 
@@ -21,7 +22,7 @@ def get_pcbang_info(location):
 
 def display_map(location, name):
     # Replace this with your actual Google Static Maps API key
-    API_KEY = "AIzaSyAAe90xo8B26j_5bne0HAU0cS1IQDQUP5s"
+    API_KEY = "MY_Keys"
 
     URL = f"https://maps.googleapis.com/maps/api/staticmap?center={location}&zoom=13&size=600x300&maptype=roadmap&key={API_KEY}"
 
