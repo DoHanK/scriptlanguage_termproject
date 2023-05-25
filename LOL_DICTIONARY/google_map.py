@@ -1,48 +1,40 @@
+import requests
+from bs4 import BeautifulSoup
 import tkinter as tk
-from tkinter import ttk
-import webbrowser
+from PIL import Image, ImageTk
+from io import BytesIO
 
-# Google Maps API key
-API_KEY = 'AIzaSyAAe90xo8B26j_5bne0HAU0cS1IQDQUP5s'
+def get_pcbang_info(location):
+    search_url = "https://map.naver.com/v5/search/%EC%A0%95%EC%99%95%EB%8F%99%20pc%EB%B0%A9?c=12,0,0,0,dh"
+    res = requests.get(search_url)
+    res.raise_for_status()
 
-# 시/도와 도시 정보
-provinces = {'Seoul': ['Gangnam-gu', 'Seocho-gu'], 'Busan': ['Haeundae-gu', 'Busanjin-gu']}
+    soup = BeautifulSoup(res.text, 'html.parser')
 
+    pcbang_list = soup.find_all('li', attrs={'class': 'item ng-tns-c27-1'})
 
-def open_map(*args):
-    province = province_var.get()
-    city = city_var.get()
-
-    # Open the Google Maps URL with the selected city in the web browser
-    url = f"https://www.google.com/maps/search/PC방+in+{province}+{city}?key={API_KEY}"
-    webbrowser.open(url)
-
-
-# Set up the Tkinter window
-root = tk.Tk()
-
-province_var = tk.StringVar()
-city_var = tk.StringVar()
-
-# Create the province dropdown menu
-province_dropdown = ttk.Combobox(root, textvariable=province_var)
-province_dropdown['values'] = list(provinces.keys())
-province_dropdown.grid(column=0, row=0)
-
-# Create the city dropdown menu
-city_dropdown = ttk.Combobox(root, textvariable=city_var)
-city_dropdown.grid(column=1, row=0)
+    for pcbang in pcbang_list:
+        name = pcbang.find('a', attrs={'class': 'title'}).get_text()
+        address = pcbang.find('div', attrs={'class': 'item_address ng-star-inserted'}).get_text()
+        display_map(address, name)
 
 
-# Update the city dropdown menu when a province is selected
-def update_cities(*args):
-    cities = provinces[province_var.get()]
-    city_dropdown['values'] = cities
+def display_map(location, name):
+    # Replace this with your actual Google Static Maps API key
+    API_KEY = "AIzaSyAAe90xo8B26j_5bne0HAU0cS1IQDQUP5s"
+
+    URL = f"https://maps.googleapis.com/maps/api/staticmap?center={location}&zoom=13&size=600x300&maptype=roadmap&key={API_KEY}"
+
+    response = requests.get(URL)
+    img_data = response.content
+    img = Image.open(BytesIO(img_data))
+
+    window = tk.Tk()
+    window.title(name)
+    tk_img = ImageTk.PhotoImage(img)
+    label = tk.Label(window, image=tk_img)
+    label.pack()
+    window.mainloop()
 
 
-province_var.trace('w', update_cities)
-
-# When a city is selected, open the map
-city_var.trace('w', open_map)
-
-root.mainloop()
+get_pcbang_info('정왕동')
