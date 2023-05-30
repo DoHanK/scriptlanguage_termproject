@@ -21,22 +21,23 @@ class user:
         html = req.text
         soup = BeautifulSoup(html, 'html.parser')
         info = str(soup.text)
-        print(info)
         pmid = info.find("종합")
         psolo = info.find("솔로랭크")
         pfree = info.find("자유랭크")
         self.sololank = info[psolo:pfree]
         self.freelank = info[pfree:pmid]
 
-        print(self.sololank)
-        print(self.freelank)
 
         #파씽을 통해 사용자 프로필 받아오기
         self.profil_pic = pushbackscr(str(*soup.select('#__next > div.css-uclu8m.eioz'+num+' > div.summary > div > div.face > div > img')))
         #레벨 불러오기
         self.level =pushbacklevel(str(*soup.select('#__next > div.css-uclu8m.eioz'+num+' > div.summary > div > div.face > div > div > span')))
         self.name = name
-
+        #솔로랭크 승률로 그래프 만들것임
+        if("솔로랭크Unranked"!=self.sololank):
+            self.OnlySoloLankOdds = eval(self.sololank[len(self.sololank)-3:-1])
+        else:
+            self.OnlySoloLankOdds = 0
 
     def getsololank(self):
         return self.sololank
@@ -50,3 +51,5 @@ class user:
     def getlevel(self):
         return self.level
 
+    def GetOnlySoloLankOdds(self):
+        return self.OnlySoloLankOdds
