@@ -24,21 +24,19 @@
 
 ## 개발 환경
 
--Python
--pycharm
--git 개발 기간(23.03~23.06) (3개월)
+- Python
+- pycharm
+- git 개발 기간(23.03~23.06) (3개월)
 
 
 ## 사용 기술
 
--python
--github
--beautifulsoup를 이용해 op.gg를 파싱해, 전적과 추천아이템을 받아오도록 개발하였습니다.
--구글 api를 이용해 구글 지도를 띄웠습니다.
+- python
+- github
+- beautifulsoup를 이용해 op.gg를 파싱해, 전적과 추천아이템을 받아오도록 개발하였습니다.
+- 구글 api를 이용해 구글 지도를 띄웠습니다.
 
 
-##시연 영상
-
-
-https://www.youtube.com/watch?v=BjEhs0FlIw8 (2분 14초)
+## 시연 영상
+- https://www.youtube.com/watch?v=BjEhs0FlIw8 (2분 14초)
 
